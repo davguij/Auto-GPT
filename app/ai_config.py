@@ -1,5 +1,5 @@
 import yaml
-import data
+import app.data
 
 
 class AIConfig:
@@ -39,5 +39,5 @@ class AIConfig:
         for i, goal in enumerate(self.ai_goals):
             full_prompt += f"{i+1}. {goal}\n"
 
-        full_prompt += f"\n\n{data.load_prompt()}"
+        full_prompt += f"\n\n{app.data.load_prompt()}"
         return full_prompt

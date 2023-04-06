@@ -1,8 +1,8 @@
 from typing import List, Optional
 import json
-from config import Config
-from call_ai_function import call_ai_function
-from json_parser import fix_and_parse_json
+from app.config import Config
+from app.call_ai_function import call_ai_function
+from app.json_parser import fix_and_parse_json
 cfg = Config()
 
 # Evaluating code
@@ -13,7 +13,7 @@ def evaluate_code(code: str) -> List[str]:
     description_string = """Analyzes the given code and returns a list of suggestions for improvements."""
 
     result_string = call_ai_function(function_string, args, description_string)
-    
+
     return result_string
 
 

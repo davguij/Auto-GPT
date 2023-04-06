@@ -1,12 +1,12 @@
 import time
 import openai
 from dotenv import load_dotenv
-from config import Config
-import token_counter
+from app.config import Config
+import app.token_counter
 
 cfg = Config()
 
-from llm_utils import create_chat_completion
+from app.llm_utils import create_chat_completion
 
 
 def create_chat_message(role, content):
@@ -56,7 +56,7 @@ def chat_with_ai(
             current_context = [
                 create_chat_message(
                     "system", prompt), create_chat_message(
-                    "system", f"Permanent memory: {permanent_memory}")]                
+                    "system", f"Permanent memory: {permanent_memory}")]
 
             # Add messages from the full message history until we reach the token limit
             next_message_to_add_index = len(full_message_history) - 1
@@ -64,14 +64,14 @@ def chat_with_ai(
             insertion_index = len(current_context)
 
             # Count the currently used tokens
-            current_tokens_used = token_counter.count_message_tokens(current_context, model)
-            current_tokens_used += token_counter.count_message_tokens([create_chat_message("user", user_input)], model) # Account for user input (appended later)
+            current_tokens_used = app.token_counter.count_message_tokens(current_context, model)
+            current_tokens_used += app.token_counter.count_message_tokens([create_chat_message("user", user_input)], model) # Account for user input (appended later)
 
             while next_message_to_add_index >= 0:
                 # print (f"CURRENT TOKENS USED: {current_tokens_used}")
                 message_to_add = full_message_history[next_message_to_add_index]
 
-                tokens_to_add = token_counter.count_message_tokens([message_to_add], model)
+                tokens_to_add = app.token_counter.count_message_tokens([message_to_add], model)
                 if current_tokens_used + tokens_to_add > send_token_limit:
                     break
 
@@ -80,7 +80,7 @@ def chat_with_ai(
 
                 # Count the currently used tokens
                 current_tokens_used += tokens_to_add
-                
+
                 # Move to the next most recent message in the full message history
                 next_message_to_add_index -= 1
 

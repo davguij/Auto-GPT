@@ -5,7 +5,7 @@ auto_gpt_workspace/
 last_run_ai_settings.yaml
 outputs/*
 package-lock.json
-scripts/__pycache__/
-scripts/*json
-scripts/auto_gpt_workspace/*
-scripts/node_modules/
+app/scripts/__pycache__/
+app/scripts/*json
+app/scripts/auto_gpt_workspace/*
+app/scripts/node_modules/
